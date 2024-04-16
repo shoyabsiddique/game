@@ -4,6 +4,7 @@ package com.hackathon.game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MultiClicks extends Application {
     private final int screenWidth = 800;
@@ -29,7 +31,7 @@ public class MultiClicks extends Application {
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
         try {
-            root.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream("C:\\Users\\walav\\IdeaProjects\\demo1\\src\\main\\resources\\assets\\textures\\anim\\grass.jpg")), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(100, 100,true,true, false, true))));
+            root.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream("C:\\Users\\shoya\\IdeaProjects\\game\\src\\main\\resources\\assets\\textures\\anim\\grass.jpg")), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(100, 100,true,true, false, true))));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -50,22 +52,38 @@ public class MultiClicks extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        startTimer();
+        startTimer(primaryStage);
     }
 
-    private void startTimer() {
-        gameTimer = new Timeline(new KeyFrame(Duration.seconds(5), event -> endGame()));
+    private void startTimer(Stage stage) {
+        gameTimer = new Timeline(new KeyFrame(Duration.seconds(5), event -> endGame(stage)));
         gameTimer.setCycleCount(1);
         gameTimer.play();
     }
 
-    private void endGame() {
+    private void endGame(Stage stage) {
         clickButton.setDisable(true);
         if (score >= winThreshold) {
             scoreLabel.setText("Congratulations! You Win!");
         } else {
             scoreLabel.setText("Game Over! Your Score: " + score);
         }
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        Parent root = fxmlLoader.load();
+        HelloController controller = fxmlLoader.getController();;
+        controller.setPrimaryStage(stage);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.setFullScreen(false);
+        stage.setResizable(false);
+
+        stage.show();
     }
 
     private void incrementScore() {

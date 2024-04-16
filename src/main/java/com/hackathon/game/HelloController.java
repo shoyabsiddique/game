@@ -16,10 +16,12 @@ public class HelloController {
     private Stage primaryStage;
     private  CatchMe catchMe;
     private RandomNumberGuess randomNumberGuess;
+    private MultiClicks multiClicks;
     private SnakeGame snakeGame;
-    int[][] gameLevels = {
+    @FXML
+    static int[][] gameLevels = {
         {
-            0, 0, 0, 0
+            1, 0, 0, 0
         },
         {
             0, 0, 0, 0
@@ -31,6 +33,96 @@ public class HelloController {
             0, 0, 0, 0
         }
     };
+    @FXML
+    public static boolean isHidden00() {
+        return HelloController.isHidden(0, 0);
+    }
+    @FXML
+    public boolean isHidden01() {
+        return isHidden(0, 1);
+    }
+    @FXML
+    public boolean isHidden02() {
+        return isHidden(0, 2);
+    }
+    @FXML
+    public boolean isHidden03() {
+        return isHidden(0, 3);
+    }
+    @FXML
+    public boolean isHidden10() {
+        return isHidden(1, 0);
+    }
+    @FXML
+    public boolean isHidden11() {
+        return isHidden(1, 1);
+    }
+    @FXML
+    public boolean isHidden12() {
+        return isHidden(1, 2);
+    }
+    @FXML
+    public boolean isHidden13() {
+        return isHidden(1, 3);
+    }
+    @FXML
+    public boolean isHidden20() {
+        return isHidden(2, 0);
+    }
+    @FXML
+    public boolean isHidden21() {
+        return isHidden(2, 1);
+    }
+    @FXML
+    public boolean isHidden22() {
+        return isHidden(2, 2);
+    }
+    @FXML
+    public boolean isHidden23() {
+        return isHidden(2, 3);
+    }
+    @FXML
+    public boolean isHidden30() {
+        return isHidden(3, 0);
+    }
+    @FXML
+    public boolean isHidden31() {
+        return isHidden(3, 1);
+    }
+    @FXML
+    public boolean isHidden32() {
+        return isHidden(3, 2);
+    }
+    @FXML
+    public boolean isHidden33() {
+        return isHidden(3, 3);
+    }
+    @FXML
+    static boolean isHidden(int row, int col) {
+        // Check if the given cell is within the bounds of the gameLevels array
+        if(gameLevels[row][col] == 1){
+            return true;
+        }
+
+        // Check if the cell is hidden (has a value of 0)
+        if (gameLevels[row][col] == 0) {
+            // Check adjacent cells (up, down, left, right)
+            if (row > 0 && gameLevels[row - 1][col] == 1) { // Check up
+                return true;
+            }
+            if (row < gameLevels.length - 1 && gameLevels[row + 1][col] == 1) { // Check down
+                return true;
+            }
+            if (col > 0 && gameLevels[row][col - 1] == 1) { // Check left
+                return true;
+            }
+            if (col < gameLevels[0].length - 1 && gameLevels[row][col + 1] == 1) { // Check right
+                return true;
+            }
+        }
+
+        return false;
+    }
     public void gameCompleted(int row, int col, boolean status){
         gameLevels[row][col] = status ? 1 : 0;
     }
@@ -39,6 +131,7 @@ public class HelloController {
         catchMe = new CatchMe();
         randomNumberGuess = new RandomNumberGuess();
         snakeGame = new SnakeGame();
+        multiClicks = new MultiClicks();
     }
     public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
@@ -55,13 +148,14 @@ public class HelloController {
 
     @FXML
     public void onLevel1Clicked() throws IOException {
-        System.out.print("Comes here");
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MultiClicks.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-//        Parent root = fxmlLoader.load();
-        MultiClicksController controller = fxmlLoader.getController();;
-        controller.setPrimaryStage(primaryStage);
-        primaryStage.setScene(scene);
+//        System.out.print("Comes here");
+//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MultiClicks.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+////        Parent root = fxmlLoader.load();
+//        MultiClicksController controller = fxmlLoader.getController();;
+//        controller.setPrimaryStage(primaryStage);
+//        primaryStage.setScene(scene);
+        multiClicks.start(primaryStage);
     }
     @FXML
     protected void onStartClick(){
@@ -86,6 +180,35 @@ public class HelloController {
         // Create an alert to display the instruction card
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Instructions");
+        alert.getDialogPane().setContent(instructionCard);
+
+        // Show the alert
+        alert.showAndWait();
+    }
+
+    @FXML
+    protected void onWinClick(){
+        // Create the instruction card
+        VBox instructionCard = new VBox();
+        instructionCard.setStyle("-fx-background-color: #F0F0F0; -fx-padding: 20px; -fx-spacing: 10px;");
+
+        // Add title label
+        Label titleLabel = new Label("Congratulations");
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        instructionCard.getChildren().add(titleLabel);
+
+        // Add instruction labels
+        Label step1Label = new Label("You Won");
+//        Label step2Label = new Label("You won");
+//        Label step3Label = new Label("Step 3: Complete all steps to win the game.");
+        step1Label.setStyle("-fx-font-size: 14px;");
+//        step2Label.setStyle("-fx-font-size: 14px;");
+//        step3Label.setStyle("-fx-font-size: 14px;");
+        instructionCard.getChildren().addAll(step1Label);
+
+        // Create an alert to display the instruction card
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("win win");
         alert.getDialogPane().setContent(instructionCard);
 
         // Show the alert
