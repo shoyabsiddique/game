@@ -32,6 +32,7 @@ public class CatchMeController {
     private boolean isMoving = false;
     private Timeline gameTimer;
     Stage primaryStage;
+    private boolean when=false;
     public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
     }
@@ -52,9 +53,10 @@ public class CatchMeController {
 
     private void endGame() {
         if (score >= winThreshold) {
-            System.out.println("Congratulations! You Win!");
+            when=true;
             // You can display a win message, show a winning animation, etc.
         } else {
+            when=false;
             System.out.println("Game Over!");
             // You can display a game over message, show final score, etc.
         }
@@ -91,6 +93,7 @@ public class CatchMeController {
                 throw new RuntimeException(e);
             }
             HelloController controller = fxmlLoader.getController();
+            controller.gameCompleted(1,0, when);
             controller.setPrimaryStage(primaryStage);
             primaryStage.setScene(scene);
         });

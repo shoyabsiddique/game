@@ -6,8 +6,10 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -18,6 +20,8 @@ import java.util.Random;
 
 public class CatchMe extends Application {
     private Circle ball;
+    Stage primaryStage;
+    private boolean win=false;
     private Random random = new Random();
     private final int screenWidth = 800;
     private final int screenHeight = 600;
@@ -66,7 +70,7 @@ public class CatchMe extends Application {
     }
 
     private void startTimer(Stage stage) {
-        gameTimer = new Timeline(new KeyFrame(Duration.seconds(30), event -> {
+        gameTimer = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
             try {
                 endGame(stage);
             } catch (IOException e) {
@@ -79,35 +83,44 @@ public class CatchMe extends Application {
 
     private void endGame(Stage stage) throws IOException {
         if (score >= winThreshold) {
-            System.out.println("Congratulations! You Win!");
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-//        Parent root = fxmlLoader.load();
-            HelloController controller = fxmlLoader.getController();
-            controller.setPrimaryStage(stage);
-            stage.setTitle("Hello!");
-            stage.setScene(scene);
-            stage.setFullScreen(false);
-            stage.setResizable(false);
-            System.out.print("Comes here");
-            stage.show();
-            // You can display a win message, show a winning animation, etc.
+            win=true;
         } else {
             System.out.println("Game Over!");
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-//        Parent root = fxmlLoader.load();
-            HelloController controller = fxmlLoader.getController();;
-            controller.setPrimaryStage(stage);
-            stage.setTitle("Hello!");
-            stage.setScene(scene);
-            stage.setFullScreen(false);
-            stage.setResizable(false);
+            win = false;
+
 
             stage.show();
-            // You can display a game over message, show final score, etc.
+
         }
+VBox instructionCard = new VBox();
+    instructionCard.setStyle("-fx-background-color: #F0F0F0; -fx-padding: 20px; -fx-spacing: 10px;");
+
+    // Add title label
+    Label titleLabel = new Label("Go back");
+    titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+    instructionCard.getChildren().add(titleLabel);
+
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Game Instructions");
+    alert.getDialogPane().setContent(instructionCard);
+
+    alert.setOnCloseRequest(dialogEvent -> {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 600, 400);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        HelloController controller = fxmlLoader.getController();
+        controller.gameCompleted(1,0, win);
+        controller.setPrimaryStage(stage);
+        stage.setScene(scene);
+    });
+        alert.show();
     }
+
+
 
     private void moveBall(double mouseX, double mouseY) {
         if (isMoving) {
