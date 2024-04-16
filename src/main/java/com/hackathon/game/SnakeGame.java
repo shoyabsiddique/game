@@ -11,9 +11,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -116,17 +119,32 @@ public class SnakeGame extends Application {
             gc.setFill(Color.RED);
             gc.setFont(new Font("Digital-7", 70));
             gc.fillText("Game Over", WIDTH / 3.5, HEIGHT / 2);
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-//        Parent root = fxmlLoader.load();
-            HelloController controller = fxmlLoader.getController();;
-            controller.setPrimaryStage(stage);
-            stage.setTitle("Hello!");
-            stage.setScene(scene);
-            stage.setFullScreen(false);
-            stage.setResizable(false);
+            VBox instructionCard = new VBox();
+            instructionCard.setStyle("-fx-background-color: #F0F0F0; -fx-padding: 20px; -fx-spacing: 10px;");
 
-            stage.show();
+            // Add title label
+            Label titleLabel = new Label("Go back");
+            titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+            instructionCard.getChildren().add(titleLabel);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Instructions");
+            alert.getDialogPane().setContent(instructionCard);
+
+            alert.setOnCloseRequest(dialogEvent -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 600, 400);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                HelloController controller = fxmlLoader.getController();
+                controller.gameCompleted(1,0, true);
+                controller.setPrimaryStage(stage);
+                stage.setScene(scene);
+            });
+            alert.show();
         }
         drawBackground(gc);
         drawFood(gc);

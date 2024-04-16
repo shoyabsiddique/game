@@ -18,6 +18,7 @@ public class HelloController {
     private RandomNumberGuess randomNumberGuess;
     private MultiClicks multiClicks;
     private SnakeGame snakeGame;
+    private RPS rps;
     @FXML
     static int[][] gameLevels = {
         {
@@ -132,6 +133,7 @@ public class HelloController {
         randomNumberGuess = new RandomNumberGuess();
         snakeGame = new SnakeGame();
         multiClicks = new MultiClicks();
+        rps = new RPS();
     }
     public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
@@ -247,5 +249,16 @@ public class HelloController {
 //        controller.setPrimaryStage(primaryStage);
 //        primaryStage.setScene(scene);
         snakeGame.start(primaryStage);
+    }
+    @FXML
+    protected void onLevel5Clicked() throws IOException {
+//        System.out.print("Comes here");
+//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("catchme.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+////        Parent root = fxmlLoader.load();
+//        CatchMeController controller = fxmlLoader.getController();;
+//        controller.setPrimaryStage(primaryStage);
+//        primaryStage.setScene(scene);
+        rps.start(primaryStage);
     }
 }

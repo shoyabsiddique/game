@@ -339,7 +339,7 @@
       <ImageView fitHeight="26.0" fitWidth="47.0" onMouseClicked="#onLevel2Clicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <image>
             <Image url="@../../../assets/textures/anim/lv.png" />
-         </image></ImageView><ImageView fitHeight="26.0" fitWidth="47.0" onMouseClicked="#onLevel3Clicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         </image></ImageView><ImageView fitHeight="26.0" fitWidth="47.0" onMouseClicked="#onLevel5Clicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
       <image>
          <Image url="@../../../assets/textures/anim/lv.png" />
       </image></ImageView><ImageView fitHeight="26.0" fitWidth="47.0" onMouseClicked="#onLevel4Clicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
