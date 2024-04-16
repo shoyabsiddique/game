@@ -67,7 +67,7 @@
                </stops>
             </LinearGradient>
          </fill></Circle>
-      <Circle radius="40.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+      <Circle onMouseClicked="#onLevel4Clicked" radius="40.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -309,7 +309,7 @@
          <image>
             <Image url="@../../../assets/textures/anim/lv.png" />
          </image></ImageView>
-      <ImageView fitHeight="26.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <ImageView fitHeight="26.0" fitWidth="47.0" onMouseClicked="#onLevel4Clicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <image>
             <Image url="@../../../assets/textures/anim/lv.png" />
          </image></ImageView>

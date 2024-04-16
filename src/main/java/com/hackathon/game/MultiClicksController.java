@@ -99,6 +99,7 @@ public class MultiClicksController {
                 throw new RuntimeException(e);
             }
             HelloController controller = fxmlLoader.getController();
+            controller.gameCompleted(0, 1, !scoreLabel.getText().contains("Game Over"));
             controller.setPrimaryStage(primaryStage);
             primaryStage.setScene(scene);
         });

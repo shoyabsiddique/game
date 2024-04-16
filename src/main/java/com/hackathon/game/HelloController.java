@@ -16,10 +16,29 @@ public class HelloController {
     private Stage primaryStage;
     private  CatchMe catchMe;
     private RandomNumberGuess randomNumberGuess;
+    private SnakeGame snakeGame;
+    int[][] gameLevels = {
+        {
+            0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0
+        }
+    };
+    public void gameCompleted(int row, int col, boolean status){
+        gameLevels[row][col] = status ? 1 : 0;
+    }
 
     public void initialize(){
         catchMe = new CatchMe();
         randomNumberGuess = new RandomNumberGuess();
+        snakeGame = new SnakeGame();
     }
     public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
@@ -94,5 +113,16 @@ public class HelloController {
 //        controller.setPrimaryStage(primaryStage);
 //        primaryStage.setScene(scene);
         randomNumberGuess.start(primaryStage);
+    }
+    @FXML
+    protected void onLevel4Clicked() throws IOException {
+//        System.out.print("Comes here");
+//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("catchme.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+////        Parent root = fxmlLoader.load();
+//        CatchMeController controller = fxmlLoader.getController();;
+//        controller.setPrimaryStage(primaryStage);
+//        primaryStage.setScene(scene);
+        snakeGame.start(primaryStage);
     }
 }
